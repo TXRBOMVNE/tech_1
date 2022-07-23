@@ -1,0 +1,8 @@
+.ng-invalid.ng-touched.ng-dirty {
+  border-color: rgba(255, 0, 0);
+}
+
+.card {
+  max-width: 320px;
+  margin-inline: auto;
+}

@@ -1,0 +1,90 @@
+<nav class="navbar navbar-light navbar-expand-md py-2 navbar-dark sticky-top">
+  <div class="container-lg"><a class="navbar-brand d-flex align-items-center p-0" [routerLink]="['/']"><span
+        class="fs-2 fw-bold">tech
+        shop.</span></a><button data-bs-toggle="collapse" class="navbar-toggler shadow-none border-0"
+      data-bs-target="#navcol-1" style="color: rgb(255,255,255);"><span class="visually-hidden">Toggle
+        navigation</span><span class="navbar-toggler-icon shadow-none" style="color: rgb(255,255,255);"></span></button>
+    <div class="collapse navbar-collapse" id="navcol-1">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a [routerLink]="['/hardware']" routerLinkActive="active" class="nav-link">Hardware</a>
+        </li>
+        <li class="nav-item"><a class="nav-link">Peripherals</a></li>
+        <li class="nav-item center"><a class="nav-link">Electronics</a></li>
+      </ul>
+      <div class="btn m-0 p-0 d-flex justify-content-evenly">
+        <div id="nav-btn" class="d-grid m-2 m-md-0 mx-md-2 rounded">
+          <button class="btn text-white p-0 d-flex align-items-center shadow-none" type="button"
+            [routerLink]="['/user']">
+            <span class=" d-inline d-md-none px-2 m-auto my-0">Your Account</span>
+            <i class="fas fa-user text-light text-center"></i></button>
+        </div>
+        <div id="nav-btn" class="d-grid m-2 m-md-0 mx-md-2 rounded" title="Shopping Cart"
+          (click)="showShoppingCart = !showShoppingCart" *ngIf="!activeUrl">
+          <button class="btn text-white p-0 d-flex align-items-center position-relative shadow-none" type="button"
+            title="Shopping Cart"><span class="d-inline d-md-none px-2 m-auto">Shopping
+              Cart</span><svg class="text-light" xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em"
+              height="1em" fill="currentColor" style="font-size: 25px;">
+              <path
+                d="M96 0C107.5 0 117.4 8.19 119.6 19.51L121.1 32H541.8C562.1 32 578.3 52.25 572.6 72.66L518.6 264.7C514.7 278.5 502.1 288 487.8 288H170.7L179.9 336H488C501.3 336 512 346.7 512 360C512 373.3 501.3 384 488 384H159.1C148.5 384 138.6 375.8 136.4 364.5L76.14 48H24C10.75 48 0 37.25 0 24C0 10.75 10.75 0 24 0H96zM128 464C128 437.5 149.5 416 176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464zM512 464C512 490.5 490.5 512 464 512C437.5 512 416 490.5 416 464C416 437.5 437.5 416 464 416C490.5 416 512 437.5 512 464z">
+              </path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="shopping-cart-modal-container" @appear @enterFromTop class="pt-4 p-md-0" *ngIf="showShoppingCart">
+    <div id="shopping-cart-modal" class="container rounded py-2 text-center">
+      <h5 class="text-dark fw-bold mt-2">Shopping Cart</h5>
+      <div id="empty-cart" class="text-center text-muted rounded p-3" *ngIf="shoppingCart.products.length === 0">
+        <p class="fs-5 fw-bold mb-1">Your cart is empty!</p>
+        <i class="fas fa-cart-arrow-down fs-1"></i>
+        <p class="fs-6 mb-0 mt-1">Add some stuff here!</p>
+      </div>
+      <div id="cart-products-container" class="text-black" *ngIf="shoppingCart && shoppingCart.products.length > 0">
+        <div id="cart-product" class="row justify-content-between m-0 mb-2"
+          *ngFor="let product of shoppingCart.products" @enterFromSide>
+          <div class="col-6 row px-0 flex-grow-1 m-0">
+            <img class="rounded img-fluid col-4 my-auto p-0 fit-contain" [src]="product.imageUrl">
+            <div class="col-8 text-start text-dark px-1 flex-grow-1">
+              <p class="m-0 mt-2">{{product.name}}</p>
+              <p class="text-muted">{{product.description.brand}}</p>
+              <p class="text-muted mb-1">ID: {{product.description.manufacturerID}}</p>
+            </div>
+          </div>
+          <div class="col-1 text-center my-auto p-0">
+            <div class="d-flex align-content-center flex-column mx-auto" style="width: 20px;">
+              <button class="btn rounded-0 shadow-none rounded-top border-1 p-0 w-100 btn-dark" type="button"
+                (click)="addOne(product)" [disabled]="+quantity.value === product.stock">+</button>
+              <input type="number" [value]="product.amount" disabled min="1" [max]="product.stock"
+                class="text-center m-0 w-100 border-end border-start border-secondary p-0" #quantity>
+              <button class="btn rounded-0 shadow-none rounded-bottom border-1 p-0 w-100 btn-dark" type="button"
+                (click)="removeOne(product)" [disabled]="+quantity.value <= 1">-</button>
+
+            </div>
+          </div>
+          <div class="col-5 p-0 p-sm-2 my-auto text-dark text-end">
+            <p class="m-0">{{ product.discountPrice || product.price}} each</p>
+            <p class="m-0">Subtotal: <strong>{{(product.discountPrice || product.price)
+                *(product.amount) | currency:"USD":"symbol-narrow":"1.2-2" }}</strong>
+            </p>
+          </div>
+          <p class="text-end m-0 p-0 p-sm-2"><strong class="clickable"
+              (click)="removeProductFromCart(product)">Remove</strong>
+          </p>
+        </div>
+      </div>
+      <h6 class="text-end text-dark mt-2">Total: <strong>{{shoppingCart.totalPrice | currency:
+          "USD":"symbol-narrow":"1.2-2"}}
+        </strong>
+      </h6>
+      <div class="text-end" *ngIf="!activeUrl"><button id="cart-btn"
+          class="btn btn-primary btn-sm shadow-none border-0 py-2 px-3 p-md-2" type="button"
+          style="background: #191919;" (click)="showShoppingCart=false">Close</button><button id="cart-btn"
+          class="btn btn-primary btn-sm shadow-none border-0 ms-2 py-2 px-3 p-md-2" type="submit"
+          style="background: #F15025;" [routerLink]="['/cart']" (click)="showShoppingCart=false"
+          [disabled]="shoppingCart.products.length < 1">Proceed</button>
+      </div>
+    </div>
+  </div>
+</nav>

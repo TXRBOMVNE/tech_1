@@ -1,0 +1,262 @@
+<div id="container-1" class="container p-0 mx-auto px-md-5 m-0 py-4">
+  <div id="container-2" class="mx-auto px-2 px-md-0">
+    <h3 class="text-center">Your Account</h3>
+    <div id="container-3" class="row m-0 p-0 rounded">
+      <div class="col-12 col-md-3 py-md-2 px-2 rounded h-100">
+        <ul class="list-unstyled text-center text-muted mb-0 row m-0">
+          <li class="py-2 my-md-1 col-4 col-md-12 d-flex justify-content-center align-items-center my-2 rounded"
+            (click)="showHistory = false">My
+            account<i class="far fa-user-circle ms-1"></i></li>
+          <li class="py-2 my-md-1 col-4 col-md-12 d-flex justify-content-center align-items-center my-2 rounded"
+            (click)="showHistory = true">
+            Shopping
+            History<i class="fas fa-history ms-md-2"></i></li>
+          <li id="logout-btn" (click)="logout()"
+            class="py-2 my-md-1 col-4 col-md-12 d-flex justify-content-center align-items-center my-2 rounded">
+            Logout<svg class="ms-1" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"
+              fill="none">
+              <path
+                d="M8.51428 20H4.51428C3.40971 20 2.51428 19.1046 2.51428 18V6C2.51428 4.89543 3.40971 4 4.51428 4H8.51428V6H4.51428V18H8.51428V20Z"
+                fill="currentColor"></path>
+              <path
+                d="M13.8418 17.385L15.262 15.9768L11.3428 12.0242L20.4857 12.0242C21.038 12.0242 21.4857 11.5765 21.4857 11.0242C21.4857 10.4719 21.038 10.0242 20.4857 10.0242L11.3236 10.0242L15.304 6.0774L13.8958 4.6572L7.5049 10.9941L13.8418 17.385Z"
+                fill="currentColor"></path>
+            </svg></li>
+        </ul>
+      </div>
+      <div id="info-display" class="col-md-9 col-12 py-3 px-2 px-md-0 rounded position-relative">
+        <div @enterFromSide *ngIf="!showHistory" class="p-0 m-0 h-100">
+          <div id="my-account" class="text-center px-2">
+            <h5 class="mb-3 mt-0">My Account
+              <span (click)="enableEdit()">
+                <svg id="edit-icon" class="icon icon-tabler icon-tabler-edit ms-2" xmlns="http://www.w3.org/2000/svg"
+                  width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"></path>
+                  <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"></path>
+                  <line x1="16" y1="5" x2="19" y2="8"></line>
+                </svg>
+              </span>
+            </h5>
+            <form [formGroup]="accountForm.profile">
+              <ul class="list-inline row text-start px-md-2 mb-0 m-0">
+                <li class="list-inline-item m-0 col-12 mb-4 col-md-6 p-0 p-md-2">
+                  <label class="form-label d-block text-start mb-1 fw-bold" for="email">Email</label>
+                  <input class="form-control" type="text" formControlName="email" name="email" />
+                </li>
+                <li class="list-inline-item m-0 col-12 mb-4 col-md-6 p-0 p-md-2">
+                  <label class="form-label d-block text-start mb-1 fw-bold" for="name">Name</label>
+                  <input class="form-control" formControlName="name" type="text" />
+                </li>
+                <li class="list-inline-item m-0 col-12 mb-4 mb-md-0 col-md-6 p-0 p-md-2">
+                  <label class="form-label d-block text-start mb-1 fw-bold" for="number">Phone number</label>
+                  <input class="form-control" formControlName="number" type="text" />
+                </li>
+                <li class="list-inline-item m-0 col-12 col-md-6 p-0 p-md-2"><label
+                    class="form-label d-block text-start mb-1 fw-bold" for="password">Password</label>
+                  <input class="form-control" formControlName="password" type="password" />
+                </li>
+              </ul>
+            </form>
+          </div>
+          <div id="addresses" class="text-center px-2">
+            <h5 class="my-3">Addresses</h5>
+            <div class="p-0 w-100 row m-0">
+              <div *ngIf="userInfo?.addresses && !editMode" class="row m-0">
+                <div *ngFor="let address of userInfo?.addresses" id="address-container"
+                  class="col-12 col-md-6 rounded p-2">
+                  <div id="address" class="row m-0 h-100">
+                    <div class="col-4 p-0 text-center my-auto">
+                      <svg *ngIf="!address.apNumber" class="bi bi-house-door fs-3" xmlns="http://www.w3.org/2000/svg"
+                        width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                        <path
+                          d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z">
+                        </path>
+                      </svg>
+                      <svg *ngIf="address.apNumber" class="bi bi-building fs-3 text-dark col-2 p-0 text-center my-auto"
+                        xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                          d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z">
+                        </path>
+                        <path
+                          d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z">
+                        </path>
+                      </svg>
+                    </div>
+                    <div class="p-0 text-start col-8 my-auto">
+                      <p class="m-0 p-0">{{address.street}} {{address.number}}<span *ngIf="address.apNumber">, Ap.
+                          {{address.apNumber}}</span>, {{address.city}}</p>
+                      <p class="m-0 p-0">{{address.state}}</p>
+                      <p class="m-0 p-0 text-muted">{{address.zipCode}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="editMode">
+                <form class="address-form" [formGroup]="accountForm.addresses[i]"
+                  *ngFor="let form of accountForm.addresses;let i = index" class="row m-0 p-0  text-start">
+                  <h6 class="fw-bold my-2">Address {{i + 1}}</h6>
+                  <div class="col-12 d-grid mb-2">
+                    <label class="form-label mb-1" for="street">Street</label>
+                    <input class="form-control" type="text" formControlName="street">
+                  </div>
+                  <div class="col-12 col-sm-6 d-grid mb-2">
+                    <label class="form-label mb-1" for="number">Number</label>
+                    <input class="form-control" type="text" formControlName="number">
+                  </div>
+                  <div class="col-12 col-sm-6 d-grid mb-2">
+                    <label class="form-label mb-1" for="apNumber">
+                      Apartment Number <span class="text-muted">(optional)</span>
+                    </label>
+                    <input class="form-control" type="text" formControlName="apNumber">
+                  </div>
+                  <div class="col-12 d-grid mb-2">
+                    <label class="form-label mb-1" for="city">City</label>
+                    <input class="form-control" type="text" formControlName="city">
+                  </div>
+                  <div class="col-12 d-grid mb-2">
+                    <label class="form-label mb-1" for="state">State</label>
+                    <input class="form-control" type="text" formControlName="state">
+                  </div>
+                  <div class="col-12 d-grid mb-2">
+                    <label class="form-label mb-1" for="zipCode">Zip Code</label>
+                    <input class="form-control" type="text" formControlName="zipCode">
+                  </div>
+                </form>
+              </div>
+              <div class="text-muted">
+                <div id="empty-addresses" class="py-4" *ngIf="!userInfo?.addresses && !editMode">
+                  <h4 class="fw-bold">No address for delivery registered</h4>
+                  <p class="fs-5">Add one!</p>
+                  <div id="plus-icon" (click)="enableEdit()" (click)="addAddress()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                      class="bi bi-plus-circle" viewBox="0 0 16 16">
+                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                      <path
+                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                    </svg>
+                  </div>
+                </div>
+                <div id="plus-icon" class="my-2" *ngIf="userInfo?.addresses || editMode" (click)="addAddress()"
+                  (click)="enableEdit()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                    class="bi bi-plus-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path
+                      d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-end pe-3 pb-3 pt-1" *ngIf="editMode">
+            <button type="button" class="btn btn-dark shadow-none bg-dark" (click)="disableEdit()">Cancel</button>
+            <button type="button" class="btn btn-primary shadow-none mx-2 bg-primary"
+              (click)="updateUserData(accountForm)" (click)="disableEdit()" [disabled]="!accountForm.profile.valid">Save
+              Changes</button>
+          </div>
+        </div>
+        <div id="shopping-history" @enterFromSide1 *ngIf="showHistory" class="text-center mb-3 m-auto px-2">
+          <h5 class="my-3">Shopping History</h5>
+          <div class="p-0">
+            <div id="purchase" class="rounded p-md-2 my-2 py-2">
+              <div>
+                <div id="product" class="row m-0 my-3 my-sm-2">
+                  <img class="col-2 text-center my-auto p-0"
+                    src="https://http2.mlstatic.com/D_NQ_NP_940934-MLU47593217192_092021-O.jpg" />
+                  <div class="p-0 text-start col--md-5 my-auto ps-1 col">
+                    <p class="m-0 p-0">RTX 3070</p>
+                    <p class="m-0 p-0 text-muted">AMD</p>
+                    <p class="m-0 p-0 text-muted">DUAL-3070-OC</p>
+                  </div>
+                  <div class="col-2 p-0 my-auto text-dark text-center">
+                    <p class="m-0 fw-bold">Quantity</p>
+                    <p class="m-0">1</p>
+                  </div>
+                  <div class="col-4 col-md-3 px-0 my-auto text-dark text-end pe-0 pe-md-2">
+                    <p class="m-0">$599.9 each</p>
+                    <p class="m-0">Subtotal: <strong>$599.9</strong></p>
+                  </div>
+                </div>
+                <div id="product" class="row m-0 my-3 my-sm-2">
+                  <img class="col-2 text-center my-auto p-0"
+                    src="https://http2.mlstatic.com/D_NQ_NP_940934-MLU47593217192_092021-O.jpg" />
+                  <div class="p-0 text-start col--md-5 my-auto ps-1 col">
+                    <p class="m-0 p-0">RTX 3070</p>
+                    <p class="m-0 p-0 text-muted">AMD</p>
+                    <p class="m-0 p-0 text-muted">DUAL-3070-OC</p>
+                  </div>
+                  <div class="col-2 p-0 my-auto text-dark text-center">
+                    <p class="m-0 fw-bold">Quantity</p>
+                    <p class="m-0">1</p>
+                  </div>
+                  <div class="col-4 col-md-3 px-0 my-auto text-dark text-end pe-0 pe-md-2">
+                    <p class="m-0">$599.9 each</p>
+                    <p class="m-0">Subtotal: <strong>$599.9</strong></p>
+                  </div>
+                </div>
+                <div id="product" class="row m-0 my-3 my-sm-2">
+                  <img class="col-2 text-center my-auto p-0"
+                    src="https://http2.mlstatic.com/D_NQ_NP_940934-MLU47593217192_092021-O.jpg" />
+                  <div class="p-0 text-start col--md-5 my-auto ps-1 col">
+                    <p class="m-0 p-0">RTX 3070</p>
+                    <p class="m-0 p-0 text-muted">AMD</p>
+                    <p class="m-0 p-0 text-muted">DUAL-3070-OC</p>
+                  </div>
+                  <div class="col-2 p-0 my-auto text-dark text-center">
+                    <p class="m-0 fw-bold">Quantity</p>
+                    <p class="m-0">1</p>
+                  </div>
+                  <div class="col-4 col-md-3 px-0 my-auto text-dark text-end pe-0 pe-md-2">
+                    <p class="m-0">$599.9 each</p>
+                    <p class="m-0">Subtotal: <strong>$599.9</strong></p>
+                  </div>
+                </div>
+              </div>
+              <p class="text-end m-0">Total: <strong>$1,899.9</strong></p>
+            </div>
+            <div id="purchase" class="rounded p-md-2 my-0 py-2">
+              <div>
+                <div id="product" class="row m-0 my-2"><img class="col-2 text-center my-auto p-0"
+                    src="https://http2.mlstatic.com/D_NQ_NP_940934-MLU47593217192_092021-O.jpg" />
+                  <div class="p-0 text-start col-md-5 my-auto ps-1 col">
+                    <p class="m-0 p-0">RTX 3070</p>
+                    <p class="m-0 p-0 text-muted">AMD</p>
+                    <p class="m-0 p-0 text-muted">DUAL-3070-OC</p>
+                  </div>
+                  <div class="col-2 p-0 my-auto text-dark text-center">
+                    <p class="m-0 fw-bold">Quantity</p>
+                    <p class="m-0">1</p>
+                  </div>
+                  <div class="col-4 col-md-3 px-0 my-auto text-dark text-end pe-0 pe-md-2">
+                    <p class="m-0">$599.9 each</p>
+                    <p class="m-0">Subtotal: <strong>$599.9</strong></p>
+                  </div>
+                </div>
+                <div id="product" class="row m-0 my-2"><img class="col-2 text-center my-auto p-0"
+                    src="https://http2.mlstatic.com/D_NQ_NP_940934-MLU47593217192_092021-O.jpg" />
+                  <div class="p-0 text-start col--md-5 my-auto ps-1 col">
+                    <p class="m-0 p-0">RTX 3070</p>
+                    <p class="m-0 p-0 text-muted">AMD</p>
+                    <p class="m-0 p-0 text-muted">DUAL-3070-OC</p>
+                  </div>
+                  <div class="col-2 p-0 my-auto text-dark text-center">
+                    <p class="m-0 fw-bold">Quantity</p>
+                    <p class="m-0">1</p>
+                  </div>
+                  <div class="col-4 col-md-3 px-0 my-auto text-dark text-end pe-0 pe-md-2">
+                    <p class="m-0">$599.9 each</p>
+                    <p class="m-0">Subtotal: <strong>$599.9</strong></p>
+                  </div>
+                </div>
+              </div>
+              <p class="text-end m-0">Total:<strong> $1,899.9</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

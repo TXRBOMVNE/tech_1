@@ -1,0 +1,157 @@
+<div class="row m-0" *ngIf="!paymentSuccess">
+  <div class="col-12 col-md-8 rounded ps-0 pe-0 pe-md-2 mb-3 mb-md-0">
+    <div id="container-2" class="container-fluid rounded border border-1 pt-3 ">
+      <h5>Your Items</h5>
+      <div id="legend" class="row m-0 text-center text-muted d-none d-sm-flex">
+        <p class="mb-2 col-5 p-0">PRODUCT</p>
+        <p class="mb-2 col-2 p-0">PRICE</p>
+        <p class="mb-2 col-2 p-0">QUANTITY</p>
+        <p class="mb-2 col-3 p-0">SUBTOTAL</p>
+      </div>
+      <div id="empty-cart" class="text-center text-muted rounded p-3 mb-2" *ngIf="shoppingCart.products.length === 0">
+        <p class="fs-5 fw-bold mb-1">Your cart is empty!</p>
+        <i class="fas fa-cart-arrow-down fs-1"></i>
+        <p class="fs-6 mb-0 mt-1">Add some stuff here!</p>
+      </div>
+      <div *ngIf="shoppingCart.products.length != 0">
+        <div *ngFor="let product of shoppingCart.products">
+          <div id="product" class="row mx-0 py-2 py-sm-3">
+            <img class="col-sm-2 col-3 p-0 fit-contain rounded border border-1" [src]="product.imageUrl" />
+            <div class="col-sm-3 col-7 py-2 overflow-hidden">
+              <p class="m-0">{{product.name}}</p>
+              <p class="text-muted">{{product.description.brand}}</p>
+              <p class="text-muted m-0">ID: {{product.description.manufacturerID}}</p>
+            </div>
+            <div class="col-2 my-auto d-none d-sm-inline">
+              <p class="text-center m-0">{{(product.discountPrice ||
+                product.price)|currency:"USD":"symbol-narrow":"1.2-2"}}
+              </p>
+            </div>
+            <div class="col-2 d-flex justify-content-center my-auto">
+              <div style="width: 20px;">
+                <p class="text-center">{{product.amount}}</p>
+              </div>
+            </div>
+            <div class="col-12 col-sm-3 mt-2 mt-sm-0 row m-0 text-center">
+              <p class="m-0 text-muted col-6 d-sm-none">{{(product.discountPrice ||
+                product.price)|currency:"USD":"symbol-narrow":"1.2-2"}} each</p>
+              <p class="m-0 col-6 my-sm-auto text-center mx-auto"><strong>{{((product.discountPrice ||
+                  product.price)*product.amount)|currency:"USD":"symbol-narrow":"1.2-2"}}</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="invoice" class="col-md-4 col-12 px-3 rounded border-1 border">
+    <div>
+      <h5 class="my-3">Order Preview</h5>
+      <div class="row m-0 p-0">
+        <p class="col-6 p-0">Subtotal:</p>
+        <p class="text-end col-6 p-0"><strong>{{shoppingCart.totalPrice | currency:
+            "USD":"symbol-narrow":"1.2-2"}}</strong></p>
+      </div>
+      <div class="row m-0">
+        <p class="col-6 p-0">Payment Fee:</p>
+        <p class="text-end col-6 p-0"><strong>{{shoppingCart.totalPrice*.01 | currency:
+            "USD":"symbol-narrow":"1.2-2"}}</strong></p>
+      </div>
+      <div class="text-end">
+        <p class="p-0 m-0 mb-2">Total: <strong class="lead fw-bold">{{(shoppingCart.totalPrice +
+            shoppingCart.totalPrice*.01)| currency:
+            "USD":"symbol-narrow":"1.2-2"}}</strong></p>
+      </div>
+    </div>
+    <div #paypal>
+    </div>
+    <div class="text-center">
+      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="paymentSuccess">
+  <div id="payment-msg" class="text-center rounded text-white py-4">
+    <p class="fs-5 mb-0">Payment done!
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-check2-circle"
+        viewBox="0 0 16 16">
+        <path
+          d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+        <path
+          d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+      </svg>
+    </p>
+    <p class="fs-3 mb-0">The products are on your way! <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+        fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
+        <path
+          d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+      </svg></p>
+  </div>
+  <h4 class="fw-bold my-3 text-center">Your order</h4>
+  <div class="container-fluid rounded border border-1 pt-3 ">
+    <div id="legend" class="row m-0 text-center text-muted d-none d-sm-flex">
+      <p class="mb-2 col-5 p-0">PRODUCT</p>
+      <p class="mb-2 col-2 p-0">PRICE</p>
+      <p class="mb-2 col-2 p-0">QUANTITY</p>
+      <p class="mb-2 col-3 p-0">SUBTOTAL</p>
+    </div>
+    <div>
+      <div *ngFor="let product of shoppingCart.products">
+        <div id="product" class="row mx-0 py-3">
+          <img class="col-sm-2 col-3 p-0 fit-contain rounded border border-1" [src]="product.imageUrl" />
+          <div class="col-sm-3 col-7 py-2">
+            <p class="m-0">{{product.name}}</p>
+            <p class="text-muted">{{product.description.brand}}</p>
+            <p class="text-muted m-0">ID: {{product.description.manufacturerID}}</p>
+          </div>
+          <div class="col-2 my-auto d-none d-sm-inline">
+            <p class="text-center m-0">{{(product.discountPrice ||
+              product.price)|currency:"USD":"symbol-narrow":"1.2-2"}}
+            </p>
+          </div>
+          <div class="col-2 d-flex justify-content-center my-auto">
+            <div style="width: 20px;">
+              <p class="text-center">{{product.amount}}</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-3 my-auto row m-0 text-center">
+            <p class="m-0 text-muted col-12 d-sm-none">{{(product.discountPrice ||
+              product.price)|currency:"USD":"symbol-narrow":"1.2-2"}} each</p>
+            <p class="m-0 col-12"><strong>{{((product.discountPrice ||
+                product.price)*product.amount)|currency:"USD":"symbol-narrow":"1.2-2"}}</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="text-end">
+      Total: <strong>{{shoppingCart.totalPrice|currency:"USD":"symbol-narrow":"1.2-2"}}</strong>
+    </p>
+  </div>
+  <div class="text-end mt-2">
+    <button class="btn btn-dark shadow-none" type="button" [routerLink]="['/']">Back to shop</button>
+  </div>
+</div>
+<div id="modal-container-1" @enterFromTop *ngIf="paymentFail">
+  <div id="modal-container">
+    <div id="modal-background" (click)="paymentFail = false"></div>
+    <div id="modal-msg" class="text-center rounded">
+      <div class="text-danger my-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor"
+          class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+          <path
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+        </svg>
+      </div>
+      <h2 class="my-sm-3 my-md-4 mx-3">Something went wrong! <svg xmlns="http://www.w3.org/2000/svg" width="30"
+          height="30" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+          <path
+            d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
+        </svg></h2>
+      <p class="lead mx-sm-5 mx-3 my-md-4 px-md-5 fs-5">An error ocurred while processing your transaction.</p>
+      <div class="d-grid">
+        <button class="btn btn-danger fs-4 rounded-0 rounded-bottom shadow-none"
+          (click)="paymentFail = false">Dismiss</button>
+      </div>
+    </div>
+  </div>
+</div>

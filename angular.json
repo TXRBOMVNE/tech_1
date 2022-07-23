@@ -27,9 +27,15 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/public/fonts/fontawesome-all.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "src/public/js/script.min.js",
+              "src/public/js/baguetteBox.min.js"
+            ]
           },
           "configurations": {
             "production": {

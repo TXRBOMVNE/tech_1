@@ -1,1 +1,374 @@
-/* You can add global styles to this file, and also import other style files */
+html {
+  height: 100%;
+}
+
+body {
+  overflow: overlay;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+div ::-webkit-scrollbar {
+  width: 5px;
+}
+
+div ::-webkit-scrollbar-thumb {
+  background-color: rgba(25, 25, 25, 0.2);
+}
+
+::-webkit-scrollbar-track {
+  color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.4);
+  border-radius: 100vw;
+}
+
+#buy-btn {
+  background: 0 0;
+  border: 1px solid #fff;
+  position: relative;
+  z-index: 1;
+  transition: color .3s ease-in-out;
+  box-shadow: none
+}
+
+#buy-btn:active,
+#buy-btn:hover {
+  color: #000
+}
+
+#buy-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: -1;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform .3s ease-in-out
+}
+
+#buy-btn:active::before,
+#buy-btn:hover::before,
+#gallery-image-container:hover #product-hover-card {
+  transform: scaleY(1)
+}
+
+#carousel-modal {
+  background: rgba(0, 0, 0, .8);
+  padding: 20px;
+  max-width: 100%
+}
+
+.bs-icon {
+  --bs-icon-size: .75rem;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--bs-icon-size);
+  width: calc(var(--bs-icon-size) * 2);
+  height: calc(var(--bs-icon-size) * 2);
+  color: var(--bs-primary)
+}
+
+.bs-icon-xs {
+  --bs-icon-size: 1rem;
+  width: calc(var(--bs-icon-size) * 1.5);
+  height: calc(var(--bs-icon-size) * 1.5)
+}
+
+.bs-icon-sm {
+  --bs-icon-size: 1rem
+}
+
+.bs-icon-md {
+  --bs-icon-size: 1.5rem
+}
+
+.bs-icon-lg {
+  --bs-icon-size: 2rem
+}
+
+.bs-icon-xl {
+  --bs-icon-size: 2.5rem
+}
+
+.bs-icon.bs-icon-primary {
+  color: var(--bs-white);
+  background: var(--bs-primary)
+}
+
+.bs-icon.bs-icon-primary-light {
+  color: var(--bs-primary);
+  background: rgba(var(--bs-primary-rgb), .2)
+}
+
+.bs-icon.bs-icon-semi-white {
+  color: var(--bs-primary);
+  background: rgba(255, 255, 255, .5)
+}
+
+.bs-icon.bs-icon-rounded {
+  border-radius: .5rem
+}
+
+.bs-icon.bs-icon-circle {
+  border-radius: 50%
+}
+
+.fas.fa-user {
+  font-size: 25px;
+  padding: 0
+}
+
+#user-btn:focus {
+  box-shadow: none
+}
+
+nav {
+  z-index: 10;
+  background: #F15025;
+  color: white;
+  font-family: Inter, sans-serif
+}
+
+#nav-link {
+  color: rgba(255, 255, 255, .6);
+}
+
+#nav-link:hover {
+  color: rgba(255, 255, 255, .8)
+}
+
+#nav-btn {
+  transition: background-color 150ms ease-in-out;
+}
+
+#nav-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+#nav-btn:active {
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: background-color 20ms ease-in-out;
+}
+
+#products-grid .col {
+  max-width: 220px;
+  margin: 10px 20px
+}
+
+svg {
+  filter: brightness(1)
+}
+
+#product-card btn {
+  transition: 150ms
+}
+
+#product-card {
+  border-radius: 2px;
+  box-shadow: rgba(50, 50, 93, .25) 0 2px 5px -1px, rgba(0, 0, 0, .3) 0 1px 3px -1px;
+}
+
+.fit-cover {
+  object-fit: cover;
+  object-position: center;
+}
+
+.fit-contain {
+  object-fit: contain;
+  object-position: center;
+}
+
+#product-card img {
+  margin-top: 10px;
+}
+
+#shop-btns button {
+  transition: transform 150ms
+}
+
+#shop-btns button:hover {
+  transform: scale(1.02)
+}
+
+#shop-btns button:active {
+  transform: scale(1)
+}
+
+@media (min-width:768px) {
+
+  nav button i,
+  nav button svg {
+    margin: 10px
+  }
+}
+
+#product-hover-card {
+  position: absolute;
+  background-color: rgba(0, 0, 0, .8);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: .3s ease-in-out;
+  z-index: 1;
+  text-overflow: ellipsis
+}
+
+#product-hover-card .card-body {
+  opacity: 0;
+  transition: .3s ease-in-out
+}
+
+#gallery-image-container .card-body {
+  opacity: 1
+}
+
+.card-body>* {
+  text-decoration: none
+}
+
+#card-paragraph {
+  min-height: auto;
+  max-height: 80%;
+}
+
+
+#shopping-cart-modal-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, .2);
+  z-index: 1;
+  font-size: 0.8em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+#shopping-cart-modal {
+  background-color: white;
+  min-width: max(90vw, 250px);
+  max-width: 95vw;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+}
+
+#cart-products-container {
+  max-height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#cart-product {
+  background-color: white;
+}
+
+#cart-product img {
+  max-height: 100px;
+  object-fit: contain;
+}
+
+#cart-product p {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+#cart-product .btn:active {
+  transform: scale(0.98);
+  transition: 10ms;
+}
+
+#cart-product .btn {
+  transition: transform 50ms;
+}
+
+@media (min-width: 768px) {
+  #shopping-cart-modal-container {
+    background: none;
+    position: fixed;
+    top: 85px;
+    right: 20px;
+    left: initial;
+    bottom: initial;
+  }
+
+  #shopping-cart-modal {
+    min-width: 400px;
+    max-width: min(50vw, 400px);
+  }
+}
+
+#cart-btn {
+  transition: 200ms;
+}
+
+#cart-btn:active {
+  transform: scale(0.95);
+}
+
+#empty-cart {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.clickable {
+  transition: transform 100ms;
+}
+
+.clickable:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.clickable:active {
+  transform: scale(0.98);
+}
+
+#auth-page {
+  overflow-x: hidden;
+  height: calc(100vh - 65px);
+}
+
+#auth-page section {
+  top: 0;
+  bottom: 0
+}
+
+#auth-btn {
+  background-color: #F15025;
+}
+
+#auth-warning {
+  font-size: 0.8em;
+}
+
+@media (max-width:460px) {
+  #product-card {
+    width: 165px;
+  }
+}

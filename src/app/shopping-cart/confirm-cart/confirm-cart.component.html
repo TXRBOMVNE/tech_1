@@ -1,0 +1,63 @@
+<h3 class="text-center mb-3">Shopping Cart</h3>
+<div id="container-2" class="container-fluid rounded py-3">
+  <div id="legend" class="row m-0 text-center text-muted d-none d-sm-flex">
+    <p class="mb-2 col-5 p-0">PRODUCT</p>
+    <p class="mb-2 col-2 p-0">PRICE</p>
+    <p class="mb-2 col-2 p-0">QUANTITY</p>
+    <p class="mb-2 col-3 p-0">SUBTOTAL</p>
+  </div>
+  <div id="empty-cart" class="text-center text-muted rounded p-3 mb-2" *ngIf="shoppingCart.products.length === 0">
+    <p class="fs-5 fw-bold mb-1">Your cart is empty!</p>
+    <i class="fas fa-cart-arrow-down fs-1"></i>
+    <p class="fs-6 mb-0 mt-1">Add some stuff here!</p>
+  </div>
+  <div *ngIf="shoppingCart.products.length != 0">
+    <div *ngFor="let product of shoppingCart.products">
+      <div id="product" class="border rounded border-1 row mx-0 my-2 py-1 py-md-3">
+        <img class="col-sm-2 col-3 px-1 px-md-4 fit-contain rounded" [src]="product.imageUrl" />
+        <div class="col-sm-3 col-7 py-2">
+          <p class="m-0">{{product.name}}</p>
+          <p class="text-muted">{{product.description.brand}}</p>
+          <p class="text-muted m-0">ID: {{product.description.manufacturerID}}</p>
+        </div>
+        <div class="col-2 my-auto d-none d-sm-inline">
+          <p class="text-center m-0">{{(product.discountPrice ||
+            product.price)|currency:"USD":"symbol-narrow":"1.2-2"}}
+          </p>
+        </div>
+        <div class="col-2 d-flex justify-content-center my-auto">
+          <div style="width: 20px;">
+            <button class="btn rounded-0 shadow-none rounded-top border-1 p-0 w-100 btn-dark" type="button"
+              (click)="addOne(product)" [disabled]="+quantity.value === product.stock">+</button>
+            <input type="number" [value]="product.amount" disabled min="1" [max]="product.stock"
+              class="text-center border-1 m-0 w-100 p-0" #quantity>
+            <button class="btn rounded-0 shadow-none rounded-bottom border-1 p-0 w-100 btn-dark" type="button"
+              (click)="removeOne(product)" [disabled]="+quantity.value <= 1">-</button>
+          </div>
+        </div>
+        <div class="col-12 col-sm-3 my-1 my-sm-0 row m-0 text-center">
+          <p class="m-0 text-muted col-6 d-sm-none my-auto">{{(product.discountPrice ||
+            product.price)|currency:"USD":"symbol-narrow":"1.2-2"}} each</p>
+          <p class="m-0 col-sm-12 col-6 my-auto"><span class="d-sm-none">Total: </span><strong>{{((product.discountPrice
+              ||
+              product.price)*product.amount)|currency:"USD":"symbol-narrow":"1.2-2"}}</strong></p>
+        </div>
+
+      </div>
+      <p class="text-end m-0 p-0"><strong class="clickable" (click)="removeProductFromCart(product)">Remove</strong>
+      </p>
+    </div>
+  </div>
+  <div class="m-0 p-0">
+    <h6 class="text-end text-dark my-4">Total: <strong>{{shoppingCart.totalPrice | currency:
+        "USD":"symbol-narrow":"1.2-2"}}
+      </strong>
+    </h6>
+  </div>
+  <div class="text-end">
+    <button id="keep-browsing-btn" class="btn btn-primary me-1 border-0 shadow-none" type="button">Keep
+      shopping</button>
+    <button id="checkout-btn" class="btn btn-primary border-0 shadow-none" type="button"
+      [disabled]="!shoppingCart?.products?.length" [routerLink]="['checkout']">Checkout</button>
+  </div>
+</div>

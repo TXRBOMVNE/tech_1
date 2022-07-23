@@ -1,0 +1,29 @@
+#container-2 {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+.fit-contain {
+  object-fit: contain;
+}
+
+#legend {
+  font-size: 0.85em;
+}
+
+#keep-browsing-btn {
+  background-color: #191919;
+}
+
+#checkout-btn {
+  background-color: #f15025;
+}
+
+@media (max-width: 576px) {
+  #container-2 {
+    font-size: 0.9em;
+  }
+}
+
+#product {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}

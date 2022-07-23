@@ -1,0 +1,41 @@
+#invoice {
+  height: fit-content;
+}
+
+#payment-msg {
+  background-color: #F15025;
+}
+
+#modal-container-1 {
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+}
+
+
+#modal-container {
+  position: relative;
+}
+
+#modal-background {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: -1;
+}
+
+#modal-msg {
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 100%);
+  min-width: min(85vw, 650px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}

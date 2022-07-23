@@ -1,0 +1,125 @@
+<div id="auth-page" class="position-relative my-auto">
+  <section class="position-absolute py-5 pt-4 pt-md-5 my-auto w-100" @enterFromSide *ngIf="!signUpMode">
+    <div class="container">
+      <div class="row mb-3">
+        <div class="col-md-8 col-xl-6 text-center mx-auto">
+          <h2 *ngIf="!needLogin">Login</h2>
+          <h2 *ngIf="needLogin">Login to continue </h2>
+          <p class="w-lg-50 m-0">Curae hendrerit donec commodo hendrerit egestas tempus, turpis facilisis nostra nunc.
+            Vestibulum dui eget ultrices.</p>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6 col-xl-4">
+          <div class="card">
+            <div class="card-body d-flex flex-column align-items-center">
+              <div class="bs-icon-xl bs-icon-circle text-white bg-dark bs-icon my-4"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                  <path
+                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z">
+                  </path>
+                </svg></div>
+              <form class="text-center" [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm)">
+                <p class="alert alert-danger p-2" role="alert" @scaleDown *ngIf="loginError">{{loginError}}</p>
+                <div class="mb-3">
+                  <input class="form-control shadow-none" formControlName="email" type="email" name="email"
+                    placeholder="Email" />
+                  <p id="auth-warning" class="text-danger text-start mb-0 mt-1"
+                    *ngIf="!loginForm.controls['email'].valid && loginForm.controls['email'].touched && loginForm.controls['email'].dirty">
+                    Please
+                    enter a valid email</p>
+                </div>
+                <div class="mb-3">
+                  <input class="form-control shadow-none" formControlName="password" type="password" name="password"
+                    placeholder="Password" />
+                  <p id="auth-warning" class="text-danger text-start mb-0 mt-1"
+                    *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched && loginForm.controls['password'].dirty">
+                    Please
+                    enter a valid password</p>
+                </div>
+                <div class="mt-4 mb-3" id="shop-btns"><button id="auth-btn"
+                    class="btn text-white d-block w-100 shadow-none" type="submit"
+                    [disabled]="!loginForm.valid">Login</button>
+                </div>
+                <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+                <p class="text-muted fs-6 mb-2">Don't have an account? <span class="clickable text-primary"
+                    (click)="signUpMode = true">Register
+                    here</span></p>
+                <p class="text-muted clickable">Forgot your password?</p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="position-absolute pt-4 pt-md-5 my-auto w-100" @enterFromSide *ngIf="signUpMode">
+    <div class="container">
+      <div class="row mb-3">
+        <div class="col-md-8 col-xl-6 text-center mx-auto">
+          <h2>Sign Up</h2>
+          <p class="w-lg-50 m-0">Curae hendrerit donec commodo hendrerit egestas tempus, turpis facilisis nostra nunc.
+            Vestibulum dui eget ultrices.</p>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6 col-xl-4">
+          <div class="card">
+            <div class="card-body d-flex flex-column align-items-center">
+              <div class="bs-icon-xl bs-icon-circle text-white bg-dark bs-icon my-4"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                  <path
+                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z">
+                  </path>
+                </svg></div>
+              <form class="text-center" [formGroup]="signUpForm" (ngSubmit)="onSignUp(signUpForm)">
+                <p class="alert alert-danger p-2" role="alert" @scaleDown *ngIf="signUpError">{{signUpError}}</p>
+                <div class="mb-3">
+                  <input class="form-control shadow-none" formControlName="email" type="email" name="email"
+                    placeholder="Email" />
+                  <p id="auth-warning" class="text-danger text-start mb-0 mt-1"
+                    *ngIf="!signUpForm.controls['email'].valid && signUpForm.controls['email'].touched && signUpForm.controls['email'].dirty">
+                    Please
+                    enter a valid email</p>
+                </div>
+
+                <div class="mb-3">
+                  <input class="form-control shadow-none" formControlName="name" type="text" name="name"
+                    placeholder="Your name" />
+                  <p id="auth-warning" class="text-danger text-start mb-0 mt-1"
+                    *ngIf="!signUpForm.controls['name'].valid && signUpForm.controls['name'].touched && signUpForm.controls['name'].dirty">
+                    Please
+                    enter a valid name</p>
+                </div>
+                <div class="mb-3">
+                  <input class="form-control shadow-none" formControlName="number" type="text" name="number"
+                    placeholder="Phone number" />
+                  <p id="auth-warning" class="text-danger text-start mb-0 mt-1"
+                    *ngIf="!signUpForm.controls['number'].valid && signUpForm.controls['number'].touched && signUpForm.controls['number'].dirty">
+                    Please
+                    enter a valid phone number</p>
+                </div>
+                <div class="mb-3"><input class="form-control shadow-none" formControlName="password" type="password"
+                    name="password" placeholder="Password" />
+                  <p id="auth-warning" class="text-danger text-start mb-0 mt-1"
+                    *ngIf="!signUpForm.controls['password'].valid && signUpForm.controls['password'].touched && signUpForm.controls['password'].dirty">
+                    Please
+                    enter a valid password</p>
+                </div>
+                <div class="mt-4 mb-3" id="shop-btns"><button id="auth-btn"
+                    class="btn text-white d-block w-100 shadow-none" type="submit" [disabled]="!signUpForm.valid">Sign
+                    Up</button>
+                </div>
+                <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+                <p class="text-muted fs-6 mb-2">Already have an account? <span class="clickable text-primary"
+                    (click)="signUpMode = false">Login
+                    here</span></p>
+                <p class="text-muted clickable">Forgot your password?</p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
